@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
-import { TextField, IconButton, Grid } from '@material-ui/core';
+
+import { nanoid } from 'nanoid';
+
+import { TextField, IconButton, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AddBox from '@material-ui/icons/AddBox';
-import { nanoid } from 'nanoid';
+
 import SnackBar from './SnackBar';
 
 const useStyles = makeStyles({
-    root: {
-        marginTop: 20,
+    TextField: {
+        width: '50vh',
+        marginLeft: '50px'
     },
     btn: {
-        marginTop: 25,
-        marginLeft: 10,
-        alignSelf: 'center',
-        height: 50
+        marginTop: '2px'
+    },
+    container: {
+        float: 'right',
+        marginRight: '15px'
+    },
+    title: {
+        marginLeft: '50px'
     }
 });
 
 const AddTodo = ({ addTodo, open, setOpen }) => {
-
     const [content, setContent] = useState('');
+
     const classes = useStyles();
 
     const handleSubmit = (e) => {
@@ -30,25 +38,30 @@ const AddTodo = ({ addTodo, open, setOpen }) => {
             return;
         }
 
-        const todo = {
-            id: nanoid(),
-            body: content
-        };
+        const todo = { id: nanoid(), body: content };
 
         addTodo(todo);
         setContent('');
     };
 
     return (
-        <Grid container direction='column' alignItems='center'>
+        <div className={classes.container}>
+            <Typography className={classes.title} variant='h6' gutterBottom>Add Todo:</Typography>
             <form onSubmit={handleSubmit} >
-                <TextField className={classes.root} value={content} onChange={(e) => setContent(e.target.value)} label='Todo' variant='outlined' color="primary" multiline autoFocus />
+                <TextField
+                    className={classes.TextField}
+                    label='Todo'
+                    variant='outlined'
+                    color="primary"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                />
                 <IconButton type='submit' size='medium' color='primary' className={classes.btn}>
                     <AddBox />
                 </IconButton>
             </form>
             <SnackBar open={open} setOpen={setOpen} />
-        </Grid>
+        </div>
     );
 };
 

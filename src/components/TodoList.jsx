@@ -1,18 +1,23 @@
 import React from 'react';
-import { Container, Paper } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+
+import { Box, Container, Typography } from '@material-ui/core';
+
 import TodoCard from './TodoCard';
 
 const TodoList = ({ todos, deleteTodo }) => {
     return (
         <Container>
-            <hr />
-            <br />
-            {!todos.length ? <Typography variant='h6' align='center' color='textSecondary'>There are no todos left for the day!</Typography> : null}
-            <Paper>
-                {todos.map(todo => <TodoCard todo={todo} deleteTodo={deleteTodo} />)}
-            </Paper>
-        </Container>
+            <Typography variant='h6' gutterBottom>Todos</Typography>
+            {!todos.length ? (
+                <Typography variant='h6' align='center' color='textSecondary'>
+                    No todos...
+                </Typography>
+            ) : (
+                <Box style={{ display: 'flex', flexDirection: 'column' }}>
+                    {todos.map(todo => <TodoCard key={todo.id} todo={todo} deleteTodo={deleteTodo} />)}
+                </Box>
+            )}
+        </Container >
     );
 };
 
